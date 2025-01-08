@@ -25,7 +25,7 @@ def get_dynamic_response(user_input):
 
         # E-Mail Probleme
         (re.compile(r'(email|e-mail|postfach|outlook|smtp|imap|server|post|posteingang|postausgang|versenden|applemail|thunderbird)', re.IGNORECASE),
-         "Prüfen Sie bitte, ob Ihre Postfach-Einstellungen korrekt sind. Falls Sie keinen Zugriff haben, wenden Sie sich an Ihren Administrator bezüglich der Zugangsdaten, wie Passwort und Benutzername. Falls Sie Zugriff haben, aber keine E-Mail abrufen und verschicken können, kann es sein, dass eine IP-Sperre vorliegt. Gerne kann ich diese für Sie aufheben. Bitte teilen Sie mir hierzu Ihre aktuelle ipv4 mit. Mithilfe Ihrer IP kann ich im Log nachvollziehen, weshalb diese IP-Sperre aufgetreten ist. Meist liegt dies an fehlerhaften Servereinstellungen. Zur Überprüfung bitte ich Sie, dass Sie mir Ihre Servereinstellungen zuschicken."),
+         "Prüfen Sie bitte, ob Ihre Postfach-Einstellungen korrekt sind. Falls Sie keinen Zugriff haben, wenden Sie sich an Ihren Administrator bezüglich der Zugangsdaten, wie Passwort und Benutzername. Falls Sie Zugriff haben, aber keine E-Mail abrufen und verschicken können, kann es sein, dass eine IP-Sperre vorliegt. Gerne kann ich diese für Sie aufheben. Bitte teilen Sie mir hierzu Ihre aktuelle IPv4 mit. Mithilfe Ihrer IP kann ich im Log nachvollziehen, weshalb diese IP-Sperre aufgetreten ist. Meist liegt dies an fehlerhaften Servereinstellungen. Zur Überprüfung bitte ich Sie, dass Sie mir Ihre Servereinstellungen zuschicken."),
 
         # Druckerprobleme
         (re.compile(r'(drucker|druck|drucken|papier)', re.IGNORECASE),
@@ -35,11 +35,11 @@ def get_dynamic_response(user_input):
         (re.compile(r'(sicherheit|virus|malware|hacker|phishing|schadcode)', re.IGNORECASE),
          "Falls Sie den Verdacht auf einen Sicherheitsvorfall haben, trennen Sie Ihr Gerät vom Netzwerk und informieren Sie umgehend einen Sicherheitsexperten."),
 
-        # nicht gegebene Services
+        # Nicht gegebene Services
         (re.compile(r'(privat|persönlich|spiel|unterhaltung|spiele|familie|freund|freunde)', re.IGNORECASE),
          "Leider können wir keine Unterstützung für private oder nicht-arbeitsbezogene Anliegen bieten."),
 
-        # allgemeine Worte wie "fehler", "problem", etc.
+        # Allgemeine Worte wie "fehler", "problem", etc.
         (re.compile(r'(fehler|problem|störung|hilfe)', re.IGNORECASE),
          "Könnten Sie mir bitte mehr Informationen geben? Was genau funktioniert nicht oder welche Fehlermeldung wird angezeigt?"),
 
@@ -47,7 +47,7 @@ def get_dynamic_response(user_input):
         (re.compile(r'(danke|vielen dank|dankeschön)', re.IGNORECASE),
          "Sehr gerne! Kann ich Ihnen ansonsten noch anderweitig behilflich sein?"),
 
-        # generelle Hilfe
+        # Generelle Hilfe
         (re.compile(r'(wie|was|warum|kann|frage)', re.IGNORECASE),
          "Damit ich Ihr Anliegen/Ihre Frage genauer analysieren kann, benötige ich weitere Informationen."),
 
@@ -57,8 +57,7 @@ def get_dynamic_response(user_input):
         
         # Backups
         (re.compile(r'(backup|sicherung|datenverlust|wiederherstellung)', re.IGNORECASE),
-        "Haben Sie veruscht, ein Backup einzuspielen? Falls Sie kein Backup erstellt haben, bieten wir Ihnen an, dass wir ein Backup für Sie einspielen. Dieser Dienst ist mit Kosten in der Höhe von 1€ je angefangene Minute zu berechnen."),
-    
+         "Haben Sie versucht, ein Backup einzuspielen? Falls Sie kein Backup erstellt haben, bieten wir Ihnen an, dass wir ein Backup für Sie einspielen. Dieser Dienst ist mit Kosten in der Höhe von 1€ je angefangene Minute zu berechnen."),
     ]
 
     for pattern, response in responses:
@@ -74,29 +73,11 @@ def chatbot():
     while True:
         user_input = input("Ihre Frage oder Beschreibung (oder 'exit' zum Beenden): ").strip().lower()
 
-        if user_input == 'exit':
+        if user_input in ['exit', 'nein', 'nö', 'ne']:
             print("Vielen Dank, dass Sie den IT-Support-Chatbot genutzt haben. Auf Wiedersehen!")
             break
 
         response = get_dynamic_response(user_input)
-
-        if "Kann ich Ihnen noch anderweitig behilflich sein" in response:
-            follow_up = input("\nAntwort: " + response + " (ja/nein/ne/nö): ").strip().lower()
-            if follow_up == 'nein':
-                print("\nAntwort: Ich wünsche Ihnen noch einen schönen Tag! Falls Ihrerseits noch Fragen oder Anliegen auftreten, wenden Sie sich sehr gerne weiterhin an uns.")
-                break
-            elif follow_up == 'ja':
-                print("\nAntwort: Was kann ich für Sie tun? Bitte beschreiben Sie Ihr Anliegen.")
-                continue
-            elif follow_up == 'nö':
-                print("\nAntwort: Ich wünsche Ihnen noch einen schönen Tag! Falls Ihrerseits noch Fragen oder Anliegen auftreten, wenden Sie sich sehr gerne weiterhin an uns.")
-                break
-            elif follow_up == 'ne':
-                print("\nAntwort: Ich wünsche Ihnen noch einen schönen Tag! Falls Ihrerseits noch Fragen oder Anliegen auftreten, wenden Sie sich sehr gerne weiterhin an uns.")
-                break
-            else:
-                print("\nAntwort: Ich habe Ihre Eingabe nicht verstanden. Bitte antworten Sie mit 'ja' oder 'nein'.")
-                continue
 
         print("\nAntwort:", response)
 
